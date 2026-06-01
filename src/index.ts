@@ -8,7 +8,7 @@ import { authMiddleware } from "./middleware/authMiddleware";
 /* ROUTE IMPORT */
 import tenantRoutes from "./routes/tenantRoutes";
 import managerRoutes from "./routes/managerRoutes";
-
+import propertyRoutes from "./routes/propertyRoutes";
 
 /* CONFIGURATIONS */
 dotenv.config();
@@ -22,13 +22,13 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 
 /* ROUTES */
-app.get("/",authMiddleware(["manager"]), (req, res) => {
+app.get("/", authMiddleware(["manager"]), (req, res) => {
   res.send("this is home route");
 });
 
-app.use('/tenants',authMiddleware(["tenant"]), tenantRoutes)
-app.use('/managers',authMiddleware(["manager"]), managerRoutes)
-
+app.use("/properties", propertyRoutes);
+app.use("/tenants", authMiddleware(["tenant"]), tenantRoutes);
+app.use("/managers", authMiddleware(["manager"]), managerRoutes);
 
 /* SERVER */
 const port = process.env.PORT || 3002;
