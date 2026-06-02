@@ -81,7 +81,12 @@ export const getManagerProperties = async (
         const coordinates: { coordinates: string }[] =
           await prisma.$queryRaw`SELECT ST_asText(coordinates) as coordinates from "Location" where id = ${property.location.id}`;
 
-        const geoJSON: any = wktToGeoJSON(coordinates[0]?.coordinates || "");
+        if (!coordinates[0]) {
+          res.status(404).json({ message: "coordinates not found" });
+          return;
+        }
+
+        const geoJSON: any = wktToGeoJSON(coordinates[0].coordinates || "");
         const longitude = geoJSON.coordinates[0];
         const latitude = geoJSON.coordinates[1];
 

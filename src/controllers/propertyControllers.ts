@@ -233,11 +233,17 @@ export const createProperty = async (
         "User-Agent": "RealEstateApp (justsomedummyemail@gmail.com",
       },
     });
+
+    if (!geocodingResponse.data[0]) {
+      res.status(404).json({ message: "geocodingsResponse not found" });
+      return;
+    }
+
     const [longitude, latitude] =
-      geocodingResponse.data[0]?.lon && geocodingResponse.data[0]?.lat
+      geocodingResponse.data[0].lon && geocodingResponse.data[0].lat
         ? [
-            parseFloat(geocodingResponse.data[0]?.lon),
-            parseFloat(geocodingResponse.data[0]?.lat),
+            parseFloat(geocodingResponse.data[0].lon),
+            parseFloat(geocodingResponse.data[0].lat),
           ]
         : [0, 0];
 
