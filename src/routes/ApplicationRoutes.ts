@@ -4,7 +4,7 @@ import {
   createApplication,
   listApplications,
   updateApplicationStatus,
-} from "../controllers/applicationControlers";
+} from "../controllers/applicationControllers";
 
 const router = Express.Router();
 
